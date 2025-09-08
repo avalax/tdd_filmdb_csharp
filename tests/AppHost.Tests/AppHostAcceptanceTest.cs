@@ -22,6 +22,17 @@ public class AppHostAcceptanceTest(WebApplicationFactory<Program> factory)
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("running", content);
     }
+    
+    [Fact]
+    public async Task Should_access_swagger_ui()
+    {
+        var response = await _client.GetAsync("/swagger/index.html");
+        
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        
+        var content = await response.Content.ReadAsStringAsync();
+        Assert.Contains("Swagger UI", content);
+    }
 
     [Fact]
     public async Task Should_show_all_films_from_repository()

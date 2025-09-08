@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Register FilmDb dependencies
 builder.Services.AddSingleton<StaticFilmRepository>();
@@ -15,6 +16,7 @@ builder.Services.AddSingleton<ILoadAllFilmsPort, FilmPersistenceAdapter>();
 builder.Services.AddSingleton<ILoadFilmPort, FilmPersistenceAdapter>();
 builder.Services.AddSingleton<ISaveFilmPort, FilmPersistenceAdapter>();
 builder.Services.AddSingleton<IGetFilmUseCase, FilmService>();
+builder.Services.AddSingleton<IAllFilmsUseCase, FilmService>();
 builder.Services.AddSingleton<ISaveFilmUseCase, FilmService>();
 
 var app = builder.Build();
@@ -22,7 +24,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
