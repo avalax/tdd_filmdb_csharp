@@ -2,7 +2,7 @@
 
 namespace FilmDb.Adapter.Out.Persistence;
 
-public class StaticFilmRepository
+public class StaticFilmRepository : IFilmRepository
 {
     public List<Film> GetAllFilms()
     {
