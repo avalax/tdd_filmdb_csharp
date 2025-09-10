@@ -1,31 +1,15 @@
-using FilmDb.Adapter.Out.Persistence;
-using FilmDb.Application;
-using FilmDb.Application.Port.In;
-using FilmDb.Application.Port.Out;
+using FilmDb;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// Register FilmDb dependencies
-builder.Services.AddSingleton<StaticFilmRepository>();
-builder.Services.AddSingleton<IFilmRepository, StaticFilmRepository>();
-builder.Services.AddSingleton<IGetFilmUseCase, FilmService>();
-builder.Services.AddSingleton<IAllFilmsUseCase, FilmService>();
-builder.Services.AddSingleton<ISaveFilmUseCase, FilmService>();
+builder.Services.AddFilmDb();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.MapControllers();
 
@@ -35,5 +19,5 @@ app.Run();
 
 namespace AppHost
 {
-    public partial class Program { }
+    public class Program;
 }

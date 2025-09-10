@@ -9,7 +9,7 @@ namespace AppHost.Tests;
 public class ArchitectureTests
 {
     private static readonly Architecture Architecture = new ArchLoader()
-        .LoadAssemblies(typeof(FilmDb.Adapter.In.Web.FilmController).Assembly)
+        .LoadAssemblies(typeof(FilmDb.Module).Assembly)
         .Build();
 
     [Fact]
