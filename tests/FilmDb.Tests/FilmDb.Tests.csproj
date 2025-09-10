@@ -44,4 +44,8 @@
     <ProjectReference Include="..\..\src\FilmDb\FilmDb.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Adapter\Out\Persistence\" />
+  </ItemGroup>
+
 </Project>

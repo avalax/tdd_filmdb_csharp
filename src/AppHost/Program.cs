@@ -12,9 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Register FilmDb dependencies
 builder.Services.AddSingleton<StaticFilmRepository>();
-builder.Services.AddSingleton<ILoadAllFilmsPort, FilmPersistenceAdapter>();
-builder.Services.AddSingleton<ILoadFilmPort, FilmPersistenceAdapter>();
-builder.Services.AddSingleton<ISaveFilmPort, FilmPersistenceAdapter>();
+builder.Services.AddSingleton<IFilmRepository, StaticFilmRepository>();
 builder.Services.AddSingleton<IGetFilmUseCase, FilmService>();
 builder.Services.AddSingleton<IAllFilmsUseCase, FilmService>();
 builder.Services.AddSingleton<ISaveFilmUseCase, FilmService>();
