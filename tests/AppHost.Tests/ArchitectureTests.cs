@@ -13,80 +13,51 @@ public class ArchitectureTests
         .Build();
 
     [Fact]
-    public void Controllers_Should_Have_Correct_Name()
+    public void Controllers_Should_Not_Access_Output_Ports_Or_Adapters()
     {
         var rule = ArchRuleDefinition.Classes()
             .That()
             .ResideInNamespace("FilmDb.Adapter.In.Web")
             .Should()
-            .HaveNameEndingWith("Controller")
-            .Because("Controllers should follow naming convention");
+            .NotDependOnAny(ArchRuleDefinition.Types()
+                .That()
+                .ResideInNamespace("FilmDb.Application.Port.Out")
+                .Or()
+                .ResideInNamespace("FilmDb.Adapter.Out"))
+            .Because("Controllers should not directly access output ports or adapters");
 
         rule.Check(Architecture);
     }
 
     [Fact]
-    public void Services_Should_Have_Correct_Name()
+    public void Services_Should_Not_Access_Adapters()
     {
         var rule = ArchRuleDefinition.Classes()
             .That()
             .ResideInNamespace("FilmDb.Application")
             .Should()
-            .HaveNameEndingWith("Service")
-            .Because("Application services should follow naming convention");
+            .NotDependOnAny(ArchRuleDefinition.Types()
+                .That()
+                .ResideInNamespace("FilmDb.Adapter"))
+            .Because("Application services should not depend on adapters");
 
         rule.Check(Architecture);
     }
 
     [Fact]
-    public void Interfaces_In_ApplicationPortIn_Should_Have_UseCase_Suffix()
-    {
-        var rule = ArchRuleDefinition.Interfaces()
-            .That()
-            .ResideInNamespace("FilmDb.Application.Port.In")
-            .Should()
-            .HaveNameEndingWith("UseCase")
-            .Because("Input port interfaces should follow UseCase naming convention");
-
-        rule.Check(Architecture);
-    }
-
-    [Fact]
-    public void Interfaces_In_ApplicationPortOut_Should_Have_Repository_Suffix()
-    {
-        var rule = ArchRuleDefinition.Interfaces()
-            .That()
-            .ResideInNamespace("FilmDb.Application.Port.Out")
-            .Should()
-            .HaveNameEndingWith("Repository")
-            .Because("Output port interfaces should follow Repository naming convention");
-
-        rule.Check(Architecture);
-    }
-
-    [Fact]
-    public void Domain_Entities_Should_Be_In_Domain_Namespace()
+    public void Domain_Should_Not_Depend_On_Application_Or_Adapters()
     {
         var rule = ArchRuleDefinition.Classes()
             .That()
-            .HaveNameMatching("^Film$")
-            .Should()
             .ResideInNamespace("FilmDb.Domain")
-            .Because("Domain entities should be in Domain namespace");
+            .Should()
+            .NotDependOnAny(ArchRuleDefinition.Types()
+                .That()
+                .ResideInNamespace("FilmDb.Application")
+                .Or()
+                .ResideInNamespace("FilmDb.Adapter"))
+            .Because("Domain should not depend on application or adapter layers");
 
         rule.Check(Architecture);
-    }
-
-    [Fact]
-    public void Adapter_Classes_Should_Have_Correct_Namespace()
-    {
-        var rule = ArchRuleDefinition.Classes()
-            .That()
-            .HaveNameEndingWith("Adapter")
-            .Should()
-            .ResideInNamespaceMatching("FilmDb.Adapter.*")
-            .Because("Adapter classes should be in Adapter namespace");
-
-        rule.WithoutRequiringPositiveResults().Check(Architecture);
     }
 }
