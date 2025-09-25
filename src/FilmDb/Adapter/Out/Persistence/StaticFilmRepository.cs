@@ -9,14 +9,14 @@ public class StaticFilmRepository : IFilmRepository
     {
         return
         [
-            new Film { Id = 1, Title = "The Shawshank Redemption", Director = "Frank Darabont", Year = 1994 },
-            new Film { Id = 2, Title = "The Godfather", Director = "Francis Ford Coppola", Year = 1972 },
-            new Film { Id = 3, Title = "The Dark Knight", Director = "Christopher Nolan", Year = 2008 }
+            new Film(1, "The Shawshank Redemption", "Frank Darabont", 1994),
+            new Film(2, "The Godfather", "Francis Ford Coppola", 1972),
+            new Film(3, "The Dark Knight", "Christopher Nolan", 2008)
         ];
     }
 
     public Film? FindFilmById(int id)
     {
-       return FindAllFilms().FirstOrDefault(f => f.Id == id);
+        return FindAllFilms().FirstOrDefault(f => f.Id == id);
     }
 }

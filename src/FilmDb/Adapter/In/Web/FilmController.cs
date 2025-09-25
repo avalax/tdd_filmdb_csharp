@@ -55,16 +55,14 @@ public class FilmController(IGetFilmUseCase getFilmUseCase, IAllFilmsUseCase all
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<Film> CreateFilm([FromBody] CreateFilmRequest request)
     {
-        var film = new Film 
-        { 
-            Id = Random.Shared.Next(1000, 9999),
-            Title = request.Title, 
-            Director = request.Director, 
-            Year = request.Year 
-        };
-        
+        var film = new Film
+        (
+            Random.Shared.Next(1000, 9999),
+            request.Title,
+            request.Director,
+            request.Year
+        );
+
         return CreatedAtAction(nameof(GetFilm), new { id = film.Id }, film);
     }
 }
-
-

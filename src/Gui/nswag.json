@@ -1,0 +1,45 @@
+{
+  "runtime": "Net90",
+  "defaultVariables": null,
+  "documentGenerator": {
+    "fromDocument": {
+      "url": "http://localhost:5049/swagger/v1/swagger.json",
+      "output": null,
+      "newLineBehavior": "Auto"
+    }
+  },
+  "codeGenerators": {
+    "openApiToTypeScriptClient": {
+      "className": "FilmDbApiClient",
+      "moduleName": "",
+      "namespace": "filmdb_api",
+      "typeScriptVersion": 4.7,
+      "template": "Fetch",
+      "generateClientClasses": true,
+      "generateClientInterfaces": false,
+      "promiseType": "Promise",
+      "withCredentials": false,
+      "useSingletonProvider": false,
+      "injectionTokenType": "OpaqueToken",
+      "rxJsVersion": 6.0,
+      "dateTimeType": "Date",
+      "nullValue": "Undefined",
+      "generateOptionalParameters": false,
+      "exportTypes": true,
+      "wrapDtoExceptions": true,
+      "exceptionClass": "ApiException",
+      "clientBaseClass": null,
+      "wrapResponses": false,
+      "wrapResponseMethods": [],
+      "generateResponseClasses": true,
+      "responseClass": "SwaggerResponse",
+      "requiredPropertiesMustBeDefined": true,
+      "arrayType": "Array",
+      "dictionaryType": "{ [key: string]: any; }",
+      "anyType": "any",
+      "supportsStrictNullChecks": true,
+      "output": "scripts/api-client.ts",
+      "newLineBehavior": "Auto"
+    }
+  }
+}

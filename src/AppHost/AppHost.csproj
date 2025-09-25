@@ -1,28 +1,46 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <InternalsVisibleTo Include="AppHost.Tests" />
-  </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="AppHost.Tests"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FilmDb\FilmDb.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\FilmDb\FilmDb.csproj"/>
+        <ProjectReference Include="..\Gui\Gui.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8"/>
+        <PackageReference Include="NSwag.MSBuild" Version="14.6.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Include="appsettings.Development.json" />
-    <None Include="appsettings.json" />
-    <None Include="Properties\launchSettings.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="appsettings.Development.json"/>
+        <None Include="appsettings.json"/>
+        <None Include="Properties\launchSettings.json"/>
+    </ItemGroup>
+
+    <!-- Create empty wwwroot directory during build -->
+    <Target Name="CreateWwwRoot" BeforeTargets="Build">
+        <MakeDir Directories="wwwroot" Condition="!Exists('wwwroot')"/>
+    </Target>
+
+    <!-- Copy Gui wwwroot files to AppHost wwwroot for publishing -->
+    <Target Name="CopyGuiStaticFiles" BeforeTargets="PrepareForPublish">
+        <ItemGroup>
+            <GuiWwwRootFiles Include="..\Gui\wwwroot\**\*"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(GuiWwwRootFiles)" DestinationFolder="wwwroot\%(RecursiveDir)" SkipUnchangedFiles="true"/>
+    </Target>
 
 </Project>

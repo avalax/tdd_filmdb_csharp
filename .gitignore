@@ -27,6 +27,7 @@ bld/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+publish/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
@@ -41,6 +42,11 @@ ScaffoldingReadMe.txt
 *~
 CodeCoverage/
 .claude
+CLAUDE.md
+nul
+
+# Generated GUI files
+src/AppHost/wwwroot/
 
 # MSBuild Binary and Structured Log
 *.binlog
@@ -53,6 +59,9 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# npm
+src/Gui/node_modules/
 
 # MacOS
 .DS_Store
